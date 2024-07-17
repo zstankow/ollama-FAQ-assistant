@@ -12,7 +12,8 @@ client = OpenAI(
 es_client = Elasticsearch('http://localhost:9200') 
 
 
-def elastic_search(query, index_name = "course-questions"):
+def elastic_search(query, course, index_name="course-questions"):
+    # Base search query
     search_query = {
         "size": 5,
         "query": {
@@ -23,15 +24,18 @@ def elastic_search(query, index_name = "course-questions"):
                         "fields": ["question^3", "text", "section"],
                         "type": "best_fields"
                     }
-                },
-                "filter": {
-                    "term": {
-                        "course": "data-engineering-zoomcamp"
-                    }
                 }
             }
         }
     }
+
+    # Add filter only if course is not None
+    if course:
+        search_query["query"]["bool"]["filter"] = {
+            "term": {
+                "course": course
+            }
+        }
 
     response = es_client.search(index=index_name, body=search_query)
     
@@ -71,21 +75,29 @@ def llm(prompt):
     return response.choices[0].message.content
 
 
-def rag(query):
-    search_results = elastic_search(query)
+def rag(course, query):
+    search_results = elastic_search(query, course)
     prompt = build_prompt(query, search_results)
     answer = llm(prompt)
     return answer
 
 
 def main():
-    st.title("RAG Function Invocation")
+    st.title("FAQ Wizard")
 
-    user_input = st.text_input("Enter your input:")
+    choices = ["General question", "Data Engineering", "MLOPS", "Machine Learning"]
+    values = [None, "data-engineering-zoomcamp", "mlops-zoomcamp", "machine-learning-zoomcamp"]
+    choice_to_value = dict(zip(choices, values))
 
+    option = st.selectbox(
+        "Choose a category:", choices
+    )
+
+    user_input = st.text_input("Enter your question:")
     if st.button("Ask"):
+        course = choice_to_value[option]
         with st.spinner('Processing...'):
-            output = rag(user_input)
+            output = rag(course, user_input)
             st.success("Completed!")
             st.write(output)
 
