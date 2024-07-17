@@ -1,6 +1,11 @@
 # FAQ Wizzard
 
-Instead of searching through a long word file for your answer, ask the FAQ wizzard, which will find relevant questions within the document and, using RAG, will send your question to an LLM to summarize the answers into one response. 
+The FAQ Wizard is an interactive application that helps users quickly find answers to questions related to various courses. Utilizing Elasticsearch for efficient data retrieval and the phi3 language model via Ollama, this app delivers accurate and context-aware responses while running seamlessly on CPU.
+
+### Key Features:
+- Course-Specific Queries: Select from various course categories for tailored answers.
+- Advanced Search Capabilities: Leverages Elasticsearch to search FAQs, prioritizing the most relevant results.
+- AI-Powered Responses: Utilizes the phi3 model from Ollama to generate natural language answers based on the retrieved context, enhancing the user experience without the need for a GPU.
 
 ![alt text](image.png)
 
@@ -10,7 +15,7 @@ Instead of searching through a long word file for your answer, ask the FAQ wizza
 1. Clone the repository:
 
    ```
-   git clone https://github.com/zstankow/local_llm_without_gpu.git
+   git clone https://github.com/zstankow/ollama-FAQ-assistant.git
    ```
 
 2. Install the requirements:
@@ -21,14 +26,14 @@ Instead of searching through a long word file for your answer, ask the FAQ wizza
 3. Start the docker container:
 
     ```
-    cd local_llm_without_gpu
+    cd ollama-FAQ-assistant
     docker-compose up
     ```
 
 4. Open a separate terminal and access the Docker container:
 
     ```
-    cd local_llm_without_gpu
+    cd ollama-FAQ-assistant
     docker exec -it ollama bash
     ```
     Then pull the required model:
@@ -44,6 +49,6 @@ Instead of searching through a long word file for your answer, ask the FAQ wizza
 
 6. Run the streamlit app:
     ```
-    streamlit run qa_faq.py
+    streamlit run app.py
     ```
 
