@@ -7,9 +7,14 @@ services:
     environment:
       - discovery.type=single-node
       - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g  # Adjusted Java memory settings
     ports:
       - "9200:9200"
       - "9300:9300"
+    deploy:
+      resources:
+        limits:
+          memory: 2G  # Limit memory usage for Elasticsearch
 
   ollama:
     image: ollama/ollama
@@ -21,3 +26,4 @@ services:
 
 volumes:
   ollama:
+
