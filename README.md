@@ -1,6 +1,6 @@
 # FAQ Wizzard
 
-The FAQ Wizard is an interactive application that helps users quickly find answers to questions related to various courses. Utilizing Elasticsearch for efficient data retrieval and the phi3 language model via Ollama, this app delivers accurate and context-aware responses while running seamlessly on CPU.
+The FAQ Wizard is an interactive application that helps users quickly find answers to questions related to various Data zoomcamp courses. Utilizing Elasticsearch for efficient data retrieval and the phi3 language model via Ollama, this app delivers accurate and context-aware responses while running seamlessly on CPU.
 
 ### Key Features:
 - Course-Specific Queries: Select from various course categories for tailored answers.
